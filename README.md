@@ -1,10 +1,10 @@
-# UDP Server
-
-Client can stream through .wav or by recording audio
+# UDP Audio server
+Client/Server communication built upon UDP socket.
+Client can stream through .wav or by recording audio from input device
 ## Install
 1.Clone
 ```bash
-git clone https://github.com/iae94/UDPServer.git
+git clone https://github.com/iae94/UDPAudio.git
 ```
 
 2.Install

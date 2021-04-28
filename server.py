@@ -1,9 +1,6 @@
 import socket
-import wave
 import io
 import datetime
-import time
-from threading import Lock, Thread
 import logging
 import sys
 import argparse
@@ -70,28 +67,7 @@ class UDPServer:
     """
     def __init__(self):
         self.clients = {}       # Clients dict
-        self.lock = Lock()
         self.server = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-
-    def wav_watcher(self):
-        while True:
-            self.print_clients()
-            now = datetime.datetime.now()
-            for client in self.clients.values():
-                last_packet_date = client.get_last_datagram_date()
-                if last_packet_date:
-                    if (now - last_packet_date).seconds > 30:
-                        if not client.stream.closed:
-                            wf = wave.open(f"{client.client_name[1]}.wav", 'wb')
-                            wf.setnchannels(2)
-                            wf.setsampwidth(2)
-                            wf.setframerate(44100)
-                            wf.writeframes(client.get_bytes())
-                            wf.close()
-                            #with open(f"{client.client_name[1]}_.wav", mode='bx') as f:
-                            # with open(f"{client.client_name[1]}_.wav", mode='wb') as f:
-                            #     f.write(client.get_bytes())
-            time.sleep(30)
 
     def start(self, host: str, port: int):
         """
@@ -102,14 +78,13 @@ class UDPServer:
         """
         self.server.bind((host, port))
         logger.info(f"Start at {(host, port)}")
-        #Thread(target=self.wav_watcher).start()
 
         chunk = 4096
         logger.info('Wait for datagrams...')
         while True:
             datagram, address = self.server.recvfrom(chunk)
             self.handle_datagram(address=address, datagram=datagram)    # Datagram handling
-            #Thread(target=self.save_datagram, args=(address, datagram, )).start()
+            #Thread(target=self.handle_datagram, args=(address, datagram, )).start()
 
     def handle_datagram(self, address: tuple, datagram: bytes):
         """
