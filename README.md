@@ -1,6 +1,7 @@
 # UDP Audio server
+Client can stream through .wav or by recording audio from input device.\
+Server read and save data stream of each client.\
 Client/Server communication built upon UDP socket.
-Client can stream through .wav or by recording audio from input device
 ## Install
 1.Clone
 ```bash
