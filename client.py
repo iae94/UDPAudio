@@ -175,10 +175,6 @@ if __name__ == '__main__':
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
-    #VoiceClient(5, 15).send('localhost', 5001)
-    #WavClient('output.wav').send('localhost', 5001)
-    #exit()
-
     # Parse arguments
     parser = argparse.ArgumentParser(description="audio/wav streaming client")
     parser.add_argument('-uh', '--host', type=str, action='store', help='udp server host', default='localhost')
