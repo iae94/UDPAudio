@@ -97,8 +97,8 @@ class UDPServer:
         if address not in self.clients:
             logger.info(f"New client {address} with message: {datagram.decode()}!")
             self.clients[address] = ClientStream(client_name=address)
-            self.server.sendto(b'PONG', address)
-            self.print_clients()        # Printing all clients every new client(optional)
+            self.server.sendto(b'PONG', address)    # Optional(udp is fire and forget)
+            self.print_clients()                    # Printing all clients every new client(optional)
         else:
             client_data = self.clients.get(address)
             client_data.add_datagram(datagram)

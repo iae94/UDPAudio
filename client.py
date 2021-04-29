@@ -22,6 +22,7 @@ class UDPClient:
     def ping(self, server_host: str, server_port: int):
         """
         Ping server sending PING and awaiting PONG
+        Optional check due to UDP is connectless protocol
         :param server_host: udp host to ping
         :param server_port: udp port to ping
         :return:
@@ -62,7 +63,7 @@ class WavClient(UDPClient):
         :param server_port: udp port to ping
         :return:
         """
-        self.ping(server_host, server_port)     # Check server still alive
+        self.ping(server_host, server_port)     # Check server still alive(optional)
         try:
             with wave.open(os.path.abspath(self.wav_file), 'r') as wf:
                 batch = 1024
@@ -135,7 +136,7 @@ class VoiceClient(UDPClient):
         chunk = 1024                       # Record in chunks of 1024 samples
         sample_format = pyaudio.paInt16    # 16 bits per sample
 
-        self.ping(server_host, server_port)     # Check server still alive
+        self.ping(server_host, server_port)     # Check server still alive(optional)
 
         logger.info(f'Start recording {self.duration} sec...')
         # Open stream
