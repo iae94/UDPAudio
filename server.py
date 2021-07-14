@@ -132,6 +132,7 @@ if __name__ == '__main__':
     parser.add_argument('-up', '--port', type=int, action='store', help='udp server port', default=5001)
     args = parser.parse_args()
 
+    x = 5
 
     udp_server = UDPServer()
     udp_server.start(host=args.host, port=args.port)
